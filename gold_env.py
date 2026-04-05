@@ -1,23 +1,19 @@
-class GoldDetectionEnv:
+import gradio as gr
+from gold_env import GoldDetectionEnv
 
-    def __init__(self):
-        self.state = "ready"
+env = GoldDetectionEnv()
 
-    def reset(self):
-        self.state = "scan_started"
-        return self.state
+def detect_gold(text):
+    env.reset()
+    result = env.step("scan")
+    return result["result"]
 
-    def step(self, action):
-        if action == "scan":
-            reward = 1.0
-            done = True
-            result = "Gold signal detected"
-        else:
-            reward = 0.0
-            done = False
-            result = "No signal"
+iface = gr.Interface(
+    fn=detect_gold,
+    inputs="text",
+    outputs="text",
+    title="AI Gold Detection System",
+    description="Prototype system to detect gold using AI analysis."
+)
 
-        return result, reward, done
-
-    def state(self):
-        return self.state
+iface.launch()
