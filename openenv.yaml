@@ -1,0 +1,7 @@
+name: gold-detection-env
+description: AI environment for smart gold detection simulation
+version: 1.0
+
+environment:
+  observation_space: metal_signal
+  action_space: predict_gold_percentage
